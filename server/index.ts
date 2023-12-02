@@ -4,6 +4,9 @@ import cors from "cors";
 import express from "express";
 import { catalogRouter } from "./src/catalog/catalogRouter";
 import { unknownRouteMiddleware } from "./src/middleware/unknownRouteMiddleware";
+import { printAll, seed } from "./src/test/dbSeed";
+
+seed().then(printAll);
 
 const app = express();
 
