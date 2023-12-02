@@ -1,22 +1,11 @@
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import AddBookForm from "./catalog/addBookForm";
 import { Book } from "./catalog/book";
-import { BookFormType } from "./catalog/bookFormType";
 import { axios } from "./core/axios";
 
 function App() {
-  const { register, handleSubmit } = useForm<BookFormType>({});
-
   const [books, setBooks] = useState<Book[]>([]);
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    const handler = handleSubmit(async (data) => {
-      await axios.post("/books", data);
-      await getBooks();
-    });
-    handler(e);
-  };
 
   useEffect(() => {
     getBooks();
@@ -35,15 +24,7 @@ function App() {
   return (
     <div>
       <h1>App</h1>
-      <div>
-        <h2>Add book</h2>
-        <form onSubmit={onSubmit}>
-          <TextField label="Title" {...register("title")} />
-          <Button type="submit" variant="contained">
-            Add
-          </Button>
-        </form>
-      </div>
+      <AddBookForm />
       <div>
         <h2>Books:</h2>
         <ul>

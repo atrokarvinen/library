@@ -1,16 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { Book } from "./models/book";
-
-const books: Book[] = [
-  { id: "1", title: "Book 1" },
-  { id: "2", title: "Book 2" },
-];
-let maxId = 2;
+import { CatalogService } from "./catalogService";
 
 export class CatalogController {
+  catalogService = new CatalogService();
+
   getBooks = async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log("getBooks");
+      const books = await this.catalogService.getBooks();
       res.json(books);
     } catch (error) {
       next(error);
@@ -20,7 +17,8 @@ export class CatalogController {
   getBookById = async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log("getBookById:", req.params.id);
-      return res.json(books.find((book) => book.id === req.params.id));
+      const book = await this.catalogService.getBookById(+req.params.id);
+      return res.json(book);
     } catch (error) {
       next(error);
     }
@@ -29,10 +27,7 @@ export class CatalogController {
   addBook = async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log("addBook:", req.body);
-
-      maxId++;
-      const addedBook = { ...req.body, id: maxId.toString() };
-      books.push(addedBook);
+      const addedBook = await this.catalogService.addBook(req.body);
       return res.json(addedBook);
     } catch (error) {
       next(error);
@@ -42,12 +37,10 @@ export class CatalogController {
   updateBook = async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log("updateBook:", req.params.id, req.body);
-      const index = books.findIndex((book) => book.id === req.params.id);
-      if (index === -1) {
-        return res.sendStatus(404);
-      }
-      const updatedBook = { ...req.body, id: req.params.id };
-      books[index] = updatedBook;
+      const updatedBook = await this.catalogService.updateBook(
+        +req.params.id,
+        req.body
+      );
       return res.json(updatedBook);
     } catch (error) {
       next(error);
@@ -57,12 +50,8 @@ export class CatalogController {
   deleteBook = async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log("deleteBook:", req.params.id);
-      const index = books.findIndex((book) => book.id === req.params.id);
-      if (index === -1) {
-        return res.sendStatus(404);
-      }
-      books.splice(index, 1);
-      return res.sendStatus(200);
+      await this.catalogService.deleteBook(+req.params.id);
+      return res.json(200);
     } catch (error) {
       next(error);
     }
