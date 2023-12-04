@@ -5,3 +5,11 @@ export type Book = {
   isbn: string;
   libraryId: number;
 };
+
+export const defaultBook: Book = {
+  id: 0,
+  title: "",
+  authorId: 0,
+  isbn: "",
+  libraryId: 0,
+};
