@@ -1,4 +1,10 @@
-import { Box, Button, CircularProgress, Link as MuiLink } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Link as MuiLink,
+  Stack,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -17,6 +23,11 @@ export const BookDetails = () => {
   const getBook = async () => {
     const response = await axios.get<Book>(`/books/${id}`);
     setBook(response.data);
+  };
+
+  const borrowBook = async () => {
+    await axios.post(`/books/${id}/borrow`);
+    await getBook();
   };
 
   if (!book) {
@@ -38,9 +49,16 @@ export const BookDetails = () => {
         <dt>ISBN</dt>
         <dd>{book.isbn}</dd>
       </dl>
-      <MuiLink component={Link} to="/" underline="none">
-        <Button variant="contained">Go back</Button>
-      </MuiLink>
+      <Stack spacing={2} direction="row">
+        <Button variant="contained" onClick={borrowBook}>
+          Borrow
+        </Button>
+        <MuiLink component={Link} to="/" underline="none">
+          <Button variant="contained" color="secondary">
+            Go back
+          </Button>
+        </MuiLink>
+      </Stack>
     </div>
   );
 };
