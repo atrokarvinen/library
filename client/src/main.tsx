@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Admin from "./admin/admin.tsx";
+import { BookDetails } from "./home/bookDetails.tsx";
 import Home from "./home/home.tsx";
 import "./index.css";
 import { Layout } from "./layout.tsx";
@@ -13,6 +14,7 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/books/:id", element: <BookDetails /> },
       { path: "admin", element: <Admin /> },
       { path: "profile", element: <Profile /> },
       { path: "login", element: <Login /> },

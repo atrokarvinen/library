@@ -7,6 +7,7 @@ export const Layout = () => {
     <Box
       sx={{
         width: "100vw",
+        height: "100vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -18,6 +19,7 @@ export const Layout = () => {
           maxWidth: "1920px",
           justifyContent: "center",
           display: "flex",
+          flexGrow: 1,
           padding: 2,
         }}
       >

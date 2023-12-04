@@ -1,46 +1,46 @@
-import { Button } from "@mui/material";
+import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import AddBookForm from "../catalog/addBookForm";
 import { Book } from "../catalog/book";
 import { axios } from "../core/axios";
+import { BookList } from "./bookList";
+import { NoBooks } from "./noBooks";
 
 function Home() {
   const [books, setBooks] = useState<Book[]>([]);
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     getBooks();
   }, []);
+
+  useEffect(() => {
+    const filteredBooks = books.filter(
+      (book) =>
+        !searchText ||
+        book.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+    setFilteredBooks(filteredBooks);
+  }, [searchText, books]);
 
   const getBooks = async () => {
     const response = await axios.get<Book[]>("/books");
     setBooks(response.data);
   };
 
-  const deleteBook = async (id: string) => {
-    await axios.delete("/books/" + id);
-    getBooks();
-  };
-
   return (
     <div>
       <h1>App</h1>
-      <AddBookForm />
       <div>
+        <TextField
+          label="Search"
+          placeholder="Book name"
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+        />
         <h2>Books:</h2>
-        <ul>
-          {books.map((book) => (
-            <li key={book.id}>
-              <span>{book.title}</span>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => deleteBook(book.id)}
-              >
-                Delete
-              </Button>
-            </li>
-          ))}
-        </ul>
+        {filteredBooks.length > 0 && <BookList books={filteredBooks} />}
+        {filteredBooks.length === 0 && <NoBooks />}
       </div>
     </div>
   );

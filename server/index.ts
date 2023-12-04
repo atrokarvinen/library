@@ -7,11 +7,11 @@ import { prisma } from "./src/core/prisma";
 import { unknownRouteMiddleware } from "./src/middleware/unknownRouteMiddleware";
 import { printAll, seed } from "./src/test/dbSeed";
 
-const getBooks = () =>
+const seedIfDbEmpty = () =>
   prisma.book.findMany().then((books) => {
     if (books.length === 0) seed().then(printAll);
   });
-getBooks();
+seedIfDbEmpty();
 
 const app = express();
 
