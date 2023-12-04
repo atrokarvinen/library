@@ -1,10 +1,10 @@
 import { Button } from "@mui/material";
 import { useEffect, useState } from "react";
-import AddBookForm from "./catalog/addBookForm";
-import { Book } from "./catalog/book";
-import { axios } from "./core/axios";
+import AddBookForm from "../catalog/addBookForm";
+import { Book } from "../catalog/book";
+import { axios } from "../core/axios";
 
-function App() {
+function Home() {
   const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
@@ -46,4 +46,4 @@ function App() {
   );
 }
 
-export default App;
+export default Home;
