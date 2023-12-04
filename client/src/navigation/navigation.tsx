@@ -1,7 +1,12 @@
 import { AppBar, Link as MuiLink, Stack, Toolbar } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 
-const pages = [
+type Page = {
+  label: string;
+  path: string;
+};
+
+const pages: Page[] = [
   { label: "Home", path: "/" },
   { label: "Admin", path: "/admin" },
   { label: "Profile", path: "/profile" },
@@ -10,6 +15,17 @@ const pages = [
 
 const Navigation = () => {
   const location = useLocation();
+
+  const isActive = (page: Page) => {
+    if (page.path === "/") {
+      return (
+        location.pathname === page.path ||
+        location.pathname.startsWith("/books")
+      );
+    }
+    return location.pathname.startsWith(page.path);
+  };
+
   return (
     <AppBar position="static" sx={{ alignItems: "center" }}>
       <Toolbar sx={{ maxWidth: "1920px" }}>
@@ -20,7 +36,7 @@ const Navigation = () => {
               component={Link}
               to={page.path}
               color="inherit"
-              underline={location.pathname === page.path ? "always" : "none"}
+              underline={isActive(page) ? "always" : "none"}
               sx={{ ":hover": { color: "black" } }}
             >
               {page.label}
