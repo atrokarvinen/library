@@ -1,5 +1,5 @@
 import { AppBar, Link as MuiLink, Stack, Toolbar } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const pages = [
   { label: "Home", path: "/" },
@@ -9,6 +9,7 @@ const pages = [
 ];
 
 const Navigation = () => {
+  const location = useLocation();
   return (
     <AppBar position="static" sx={{ alignItems: "center" }}>
       <Toolbar sx={{ maxWidth: "1920px" }}>
@@ -19,7 +20,8 @@ const Navigation = () => {
               component={Link}
               to={page.path}
               color="inherit"
-              underline="none"
+              underline={location.pathname === page.path ? "always" : "none"}
+              sx={{ ":hover": { color: "black" } }}
             >
               {page.label}
             </MuiLink>
