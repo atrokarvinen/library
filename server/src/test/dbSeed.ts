@@ -35,7 +35,10 @@ export const seed = async () => {
   const books = await prisma.book.findMany();
 
   await prisma.user.createMany({
-    data: [{ name: "User 1" }, { name: "User 2" }],
+    data: [
+      { name: "User 1", password: "test" },
+      { name: "User 2", password: "test" },
+    ],
   });
   const users = await prisma.user.findMany();
 
