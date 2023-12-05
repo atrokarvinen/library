@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import { authRouter } from "./src/auth/authRouter";
+import { borrowingRouter } from "./src/borrowing/borrowingRouter";
 import { catalogRouter } from "./src/catalog/catalogRouter";
 import { prisma } from "./src/core/prisma";
 import { authMiddleware } from "./src/middleware/authMiddleware";
@@ -23,8 +24,9 @@ app.use(bodyParser.json());
 
 app.use(authMiddleware);
 
-app.use("/books", catalogRouter);
 app.use("/auth", authRouter);
+app.use("/borrowings", borrowingRouter);
+app.use("/books", catalogRouter);
 
 app.use(unknownRouteMiddleware);
 

@@ -1,7 +1,7 @@
 import { TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Book } from "../catalog/book";
 import { axios } from "../core/axios";
+import { Book } from "./book";
 import { BookList } from "./bookList";
 import { NoBooks } from "./noBooks";
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Book, defaultBook } from "../catalog/book";
+import { Book, defaultBook } from "../home/book";
 import { BookList } from "../home/bookList";
 
 const Profile = () => {

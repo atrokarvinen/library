@@ -6,7 +6,10 @@ export class CatalogService {
   };
 
   getBookById = async (id: number) => {
-    return prisma.book.findUnique({ where: { id } });
+    return prisma.book.findUnique({
+      where: { id },
+      include: { borrowings: true, author: true },
+    });
   };
 
   addBook = async (book: any) => {

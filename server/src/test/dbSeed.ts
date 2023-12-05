@@ -17,18 +17,21 @@ export const seed = async () => {
         authorId: authors[0].id,
         isbn: "1234567890123",
         libraryId: library.id,
+        count: 10,
       },
       {
         title: "Book 2",
         authorId: authors[0].id,
         isbn: "1234567890123",
         libraryId: library.id,
+        count: 1,
       },
       {
         title: "Book 3",
         authorId: authors[1].id,
         isbn: "1234567890123",
         libraryId: library.id,
+        count: 5,
       },
     ],
   });
@@ -64,6 +67,8 @@ export const clearData = async () => {
   await prisma.book.deleteMany({});
   await prisma.author.deleteMany({});
   await prisma.library.deleteMany({});
+  await prisma.borrowing.deleteMany({});
+  await prisma.user.deleteMany({});
 };
 
 export const printAll = async () => {

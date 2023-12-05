@@ -1,7 +1,7 @@
 import { Button, Stack, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { BookFormType } from "../catalog/bookFormType";
 import { axios } from "../core/axios";
+import { BookFormType } from "../home/bookFormType";
 
 const AddBookForm = () => {
   const { register, handleSubmit } = useForm<BookFormType>({});
