@@ -17,7 +17,7 @@ export const BookList = ({ books }: BookListProps) => {
                 <dt>Title</dt>
                 <dd>{book.title}</dd>
                 <dt>Author</dt>
-                <dd>{book.authorId}</dd>
+                <dd>{book.author?.name ?? "N/A"}</dd>
                 <dt>ISBN</dt>
                 <dd>{book.isbn}</dd>
               </dl>

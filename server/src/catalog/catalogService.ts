@@ -2,7 +2,9 @@ import { prisma } from "../core/prisma";
 
 export class CatalogService {
   getBooks = async () => {
-    return prisma.book.findMany();
+    return prisma.book.findMany({
+      include: { author: true },
+    });
   };
 
   getBookById = async (id: number) => {

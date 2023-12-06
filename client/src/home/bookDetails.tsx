@@ -69,7 +69,11 @@ export const BookDetails = () => {
         </dd>
       </dl>
       <Stack spacing={2} direction="row">
-        <Button variant="contained" onClick={borrowBook}>
+        <Button
+          variant="contained"
+          onClick={borrowBook}
+          disabled={available <= 0}
+        >
           Borrow
         </Button>
         <MuiLink component={Link} to="/" underline="none">
