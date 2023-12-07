@@ -17,10 +17,12 @@ model Library {
 }
 
 model Book {
-  id    Int    @id @default(autoincrement())
-  title String
-  isbn  String
-  count Int
+  id        Int      @id @default(autoincrement())
+  title     String
+  image     String
+  published DateTime
+  pages     Int
+  count     Int
 
   author   Author @relation(fields: [authorId], references: [id])
   authorId Int

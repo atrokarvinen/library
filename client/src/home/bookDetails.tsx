@@ -59,8 +59,6 @@ export const BookDetails = () => {
         <dd>{book.title}</dd>
         <dt>Author</dt>
         <dd>{book.author?.name ?? "N/A"}</dd>
-        <dt>ISBN</dt>
-        <dd>{book.isbn}</dd>
         <dt>Available</dt>
         <dd>
           <span>{available}</span>

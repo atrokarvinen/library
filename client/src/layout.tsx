@@ -8,6 +8,7 @@ export const Layout = () => {
       sx={{
         width: "100vw",
         height: "100vh",
+        overflowX: "hidden",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -20,7 +21,7 @@ export const Layout = () => {
           justifyContent: "center",
           display: "flex",
           flexGrow: 1,
-          padding: 2,
+          padding: 1,
         }}
       >
         <Outlet />

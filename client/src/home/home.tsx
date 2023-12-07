@@ -30,7 +30,7 @@ function Home() {
 
   return (
     <div>
-      <h1>App</h1>
+      <h1>Library</h1>
       <div>
         <TextField
           label="Search"

@@ -5,9 +5,12 @@ import { Library } from "./library";
 export type Book = {
   id: number;
   title: string;
-  isbn: string;
+  image?: string;
+  published: Date;
+  pages: number;
 
   authorId: number;
+  authorName?: string;
   author?: Author;
 
   libraryId: number;
@@ -21,7 +24,10 @@ export const defaultBook: Book = {
   id: 0,
   title: "",
   authorId: 0,
-  isbn: "",
+  image: "",
+  published: new Date(),
+  pages: 0,
+
   libraryId: 0,
   borrowings: [],
   count: 0,

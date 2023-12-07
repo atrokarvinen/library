@@ -1,40 +1,35 @@
 import { prisma } from "../core/prisma";
+import { booksData } from "./booksSeed";
 
 export const seed = async () => {
   await clearData();
 
-  const library = await prisma.library.create({ data: { name: "Library 1" } });
+  const librariesToCreate = [
+    "Meadowbrook Heights Library",
+    "Serene Haven Public Library",
+    "Evergreen Valley Reading Center",
+  ].map((name) => ({ name }));
+  await prisma.library.createMany({ data: librariesToCreate });
+  const libraries = await prisma.library.findMany();
 
-  await prisma.author.createMany({
-    data: [{ name: "Author 1" }, { name: "Author 2" }, { name: "Author 3" }],
-  });
+  const authorNames = booksData.map((book) => book.authorName);
+  const distinctAuthorNames = Array.from(new Set(authorNames)).map((name) => ({
+    name,
+  }));
+
+  await prisma.author.createMany({ data: distinctAuthorNames });
   const authors = await prisma.author.findMany();
 
-  await prisma.book.createMany({
-    data: [
-      {
-        title: "Book 1",
-        authorId: authors[0].id,
-        isbn: "1234567890123",
-        libraryId: library.id,
-        count: 10,
-      },
-      {
-        title: "Book 2",
-        authorId: authors[0].id,
-        isbn: "1234567890123",
-        libraryId: library.id,
-        count: 1,
-      },
-      {
-        title: "Book 3",
-        authorId: authors[1].id,
-        isbn: "1234567890123",
-        libraryId: library.id,
-        count: 5,
-      },
-    ],
+  const booksToCreate = booksData.map((book) => {
+    const authorName = book.authorName;
+    delete (book as any).authorName;
+    return {
+      ...book,
+      authorId: authors.find((x) => x.name === authorName)!.id,
+      libraryId: libraries[Math.floor(Math.random() * libraries.length)].id,
+    };
   });
+  await prisma.book.createMany({ data: booksToCreate });
   const books = await prisma.book.findMany();
 
   await prisma.user.createMany({
@@ -64,26 +59,22 @@ export const seed = async () => {
 };
 
 export const clearData = async () => {
+  await prisma.borrowing.deleteMany({});
   await prisma.book.deleteMany({});
   await prisma.author.deleteMany({});
   await prisma.library.deleteMany({});
-  await prisma.borrowing.deleteMany({});
   await prisma.user.deleteMany({});
 };
 
 export const printAll = async () => {
   const books = await prisma.book.findMany();
   console.log("books:", books);
-
   const authors = await prisma.author.findMany();
   console.log("authors:", authors);
-
   const libraries = await prisma.library.findMany();
   console.log("libraries:", libraries);
-
   const users = await prisma.user.findMany();
   console.log("users:", users);
-
   const borrowings = await prisma.borrowing.findMany();
   console.log("borrowings:", borrowings);
 };

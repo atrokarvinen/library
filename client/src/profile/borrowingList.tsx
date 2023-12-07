@@ -28,8 +28,6 @@ export const BorrowingList = ({
                 <dd>{borrowing.book?.title}</dd>
                 <dt>Author</dt>
                 <dd>{borrowing.book?.author?.name}</dd>
-                <dt>ISBN</dt>
-                <dd>{borrowing.book?.isbn}</dd>
                 <dt>Start</dt>
                 <dd>{formatDate(borrowing.start)}</dd>
                 <dt>End</dt>
