@@ -1,4 +1,10 @@
-import { Box, Card, Link as MuiLink } from "@mui/material";
+import {
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Link as MuiLink,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 import { Book } from "./book";
 
@@ -20,26 +26,20 @@ export const BookListItem = ({ book }: BookListItemProps) => {
   };
 
   return (
-    <MuiLink component={Link} to={`/books/${book.id}`} underline="none">
-      <Card sx={{ p: 1 }}>
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <img
-            src={book.image}
-            style={{
-              height: "300px",
-              objectFit: "cover",
-            }}
+    <Card sx={{ p: 1, width: 300 }}>
+      <CardActionArea>
+        <MuiLink component={Link} to={`/books/${book.id}`} underline="none">
+          <CardMedia
+            component="img"
+            image={book.image}
             alt={book.title}
+            height={300}
           />
-        </Box>
-        <BookInformation book={book} />
-      </Card>
-    </MuiLink>
+          <CardContent sx={{ height: 50 }}>
+            <BookInformation book={book} />
+          </CardContent>
+        </MuiLink>
+      </CardActionArea>
+    </Card>
   );
 };

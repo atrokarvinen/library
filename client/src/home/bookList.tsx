@@ -10,7 +10,7 @@ export const BookList = ({ books }: BookListProps) => {
   return (
     <Grid container spacing={2}>
       {books.map((book) => (
-        <Grid key={book.id} item xs={12} md={6} xl={3}>
+        <Grid key={book.id} item>
           <BookListItem book={book} />
         </Grid>
       ))}
