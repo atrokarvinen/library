@@ -77,7 +77,9 @@ export class BorrowingController {
   deleteBorrowing = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const id = Number(req.params.id);
+      console.log("deleting borrowing:", id);
       const borrowing = await this.service.deleteBorrowing(id);
+      console.log(`deleted borrowing (${id}) of book ${borrowing.book.title}`);
       res.json(borrowing);
     } catch (error) {
       next(error);

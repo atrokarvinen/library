@@ -35,6 +35,6 @@ export class BorrowingService {
   };
 
   deleteBorrowing = async (id: number) => {
-    return prisma.borrowing.delete({ where: { id } });
+    return prisma.borrowing.delete({ where: { id }, include: { book: true } });
   };
 }

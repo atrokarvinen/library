@@ -2,14 +2,17 @@ import {
   Box,
   Button,
   CircularProgress,
-  Link as MuiLink,
+  Divider,
   Stack,
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Link } from "react-router-dom";
 import { axios } from "../core/axios";
 import { Book } from "./book";
+import { BookDetailsItemsTable } from "./bookDetailsItemsTable";
+import { BookDetailsTable } from "./bookDetailsTable";
+import { BookInformationText } from "./bookInformationText";
 import { Borrowing } from "./borrowing";
 
 export const BookDetails = () => {
@@ -52,21 +55,21 @@ export const BookDetails = () => {
   const available = book.count - book.borrowings.length;
 
   return (
-    <div>
-      <h1>Book details</h1>
-      <dl>
-        <dt>Title</dt>
-        <dd>{book.title}</dd>
-        <dt>Author</dt>
-        <dd>{book.author?.name ?? "N/A"}</dd>
-        <dt>Available</dt>
-        <dd>
-          <span>{available}</span>
-          <span>/</span>
-          <span>{book.count}</span>
-        </dd>
-      </dl>
-      <Stack spacing={2} direction="row">
+    <Stack direction="column" spacing={2}>
+      <Typography component="h1" variant="h3">
+        <BookInformationText book={book} />
+      </Typography>
+      <img
+        src={`/${book.image}`}
+        alt={book.title}
+        height={500}
+        style={{ objectFit: "contain" }}
+      />
+      <Typography component="h2" variant="h4">
+        Items
+      </Typography>
+      <BookDetailsItemsTable book={book} />
+      <Box>
         <Button
           variant="contained"
           onClick={borrowBook}
@@ -74,12 +77,12 @@ export const BookDetails = () => {
         >
           Borrow
         </Button>
-        <MuiLink component={Link} to="/" underline="none">
-          <Button variant="contained" color="secondary">
-            Go back
-          </Button>
-        </MuiLink>
-      </Stack>
-    </div>
+      </Box>
+      <Divider />
+      <Typography component="h2" variant="h4">
+        Details
+      </Typography>
+      <BookDetailsTable book={book} />
+    </Stack>
   );
 };

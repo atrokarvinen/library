@@ -10,7 +10,7 @@ export class CatalogService {
   getBookById = async (id: number) => {
     return prisma.book.findUnique({
       where: { id },
-      include: { borrowings: true, author: true },
+      include: { borrowings: true, author: true, library: true },
     });
   };
 

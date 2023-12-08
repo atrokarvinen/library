@@ -10,24 +10,13 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Book } from "./book";
+import { BookInformationText } from "./bookInformationText";
 
 type BookListItemProps = {
   book: Book;
 };
 
 export const BookListItem = ({ book }: BookListItemProps) => {
-  const BookInformation = ({ book }: { book: Book }) => {
-    const publishYear = new Date(book.published).getFullYear();
-    return (
-      <span>
-        <span>{book.title}</span>
-        ,&nbsp;
-        <span>{book.author?.name ?? "N/A"}</span>
-        &nbsp; (<span>{publishYear}</span>)
-      </span>
-    );
-  };
-
   const availableCount = book.count - book.borrowings.length;
   const chipLabel =
     availableCount === 0 ? "Unavailable" : `Available (${availableCount})`;
@@ -39,13 +28,12 @@ export const BookListItem = ({ book }: BookListItemProps) => {
         <MuiLink component={Link} to={`/books/${book.id}`} underline="none">
           <CardMedia
             component="img"
-            image={book.image}
+            image={`/${book.image}`}
             alt={book.title}
-            height={300}
           />
           <CardContent sx={{ height: 75 }}>
             <Stack spacing={1} justifyContent="space-between" height="100%">
-              <BookInformation book={book} />
+              <BookInformationText book={book} />
               <Box>
                 <Chip label={chipLabel} size="small" color={chipColor} />
               </Box>
