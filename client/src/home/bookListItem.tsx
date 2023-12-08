@@ -1,9 +1,12 @@
 import {
+  Box,
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
+  Chip,
   Link as MuiLink,
+  Stack,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Book } from "./book";
@@ -25,6 +28,11 @@ export const BookListItem = ({ book }: BookListItemProps) => {
     );
   };
 
+  const availableCount = book.count - book.borrowings.length;
+  const chipLabel =
+    availableCount === 0 ? "Unavailable" : `Available (${availableCount})`;
+  const chipColor = availableCount === 0 ? "error" : "success";
+
   return (
     <Card sx={{ p: 1, width: 300 }}>
       <CardActionArea>
@@ -35,8 +43,13 @@ export const BookListItem = ({ book }: BookListItemProps) => {
             alt={book.title}
             height={300}
           />
-          <CardContent sx={{ height: 50 }}>
-            <BookInformation book={book} />
+          <CardContent sx={{ height: 75 }}>
+            <Stack spacing={1} justifyContent="space-between" height="100%">
+              <BookInformation book={book} />
+              <Box>
+                <Chip label={chipLabel} size="small" color={chipColor} />
+              </Box>
+            </Stack>
           </CardContent>
         </MuiLink>
       </CardActionArea>
