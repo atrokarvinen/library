@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router";
 import Navigation from "./navigation/navigation";
+import { ToastObserver } from "./toast/toastObserver";
 
 export const Layout = () => {
   return (
@@ -14,6 +15,7 @@ export const Layout = () => {
         alignItems: "center",
       }}
     >
+      <ToastObserver />
       <Navigation />
       <Box
         sx={{

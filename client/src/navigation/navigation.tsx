@@ -1,5 +1,6 @@
-import { AppBar, Link as MuiLink, Stack, Toolbar } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { AppBar, Button, Link as MuiLink, Stack, Toolbar } from "@mui/material";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { axios } from "../core/axios";
 
 type Page = {
   label: string;
@@ -15,6 +16,9 @@ const pages: Page[] = [
 
 const Navigation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const cookies = document.cookie;
+  const isLoggedIn = cookies.includes("userId");
 
   const isActive = (page: Page) => {
     if (page.path === "/") {
@@ -24,6 +28,13 @@ const Navigation = () => {
       );
     }
     return location.pathname.startsWith(page.path);
+  };
+
+  const handleLogout = async () => {
+    console.log("logging out...");
+    await axios.post("/auth/logout");
+    navigate("/");
+    console.log("logged out");
   };
 
   return (
@@ -43,6 +54,16 @@ const Navigation = () => {
             </MuiLink>
           ))}
         </Stack>
+        {isLoggedIn && (
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleLogout}
+            sx={{ ml: 5 }}
+          >
+            Logout
+          </Button>
+        )}
       </Toolbar>
     </AppBar>
   );

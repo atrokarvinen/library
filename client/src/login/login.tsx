@@ -1,58 +1,58 @@
-import { Button, Divider, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Link as MuiLink,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import { axios } from "../core/axios";
 import { LoginForm } from "./loginForm";
 import { LoginFormType } from "./loginFormType";
-import { SignUpForm } from "./signUpForm";
-import { SignUpFormType } from "./singUpFormType";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const handleLogin = async (form: LoginFormType) => {
     console.log(`signing in user '${form.username}'...`);
     const response = await axios.post("/auth/signin", form);
     console.log(`signed in user '${response.data.name}'`);
-  };
-
-  const handleSignUp = async (form: SignUpFormType) => {
-    console.log(`signing up user '${form.username}'...`);
-    const response = await axios.post("/auth/signup", form);
-    console.log(`signed up user '${response.data.name}'`);
-  };
-
-  const handleCancelSignUp = () => {
-    console.log("Cancel sign up");
-  };
-
-  const handleLogout = async () => {
-    console.log("logging out...");
-    await axios.post("/auth/logout");
-    console.log("logged out");
+    navigate("/");
   };
 
   const generateUser = async () => {
     console.log("generating user...");
     const response = await axios.post("/auth/generate");
     console.log(`generated user '${response.data.name}'`);
-    handleLogin({
+    await handleLogin({
       username: response.data.name,
       password: response.data.password,
     });
+    navigate("/");
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <Box mt={2}>
       <LoginForm onSubmit={handleLogin} />
       <Divider sx={{ my: 2 }} />
-      <SignUpForm onSubmit={handleSignUp} onCancel={handleCancelSignUp} />
-      <Stack direction="column" spacing={2} mt={4}>
-        <Button variant="contained" onClick={handleLogout}>
-          Logout
-        </Button>
+      <Typography>Not a user? Sign up here</Typography>
+      <Stack direction="column" spacing={2} mt={1}>
+        <MuiLink
+          component={Link}
+          to="/login/signup"
+          color="inherit"
+          underline="none"
+        >
+          <Button variant="contained" sx={{ width: "100%" }}>
+            Sign up
+          </Button>
+        </MuiLink>
         <Button variant="contained" color="secondary" onClick={generateUser}>
           Generate user
         </Button>
       </Stack>
-    </div>
+    </Box>
   );
 };
 

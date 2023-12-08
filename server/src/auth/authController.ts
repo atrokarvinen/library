@@ -17,6 +17,10 @@ export class AuthController {
   signUp = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { username, password, confirmPassword } = req.body;
+      const validationError = await this.authService.validateSignUp(req.body);
+      if (validationError) {
+        return res.status(400).json({ message: validationError });
+      }
       const user = await this.authService.signUp(username, password);
       res.json(user);
     } catch (error) {

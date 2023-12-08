@@ -15,13 +15,18 @@ export class AuthService {
     return user;
   };
 
-  signUp = async (username: string, password: string) => {
+  validateSignUp = async (payload: any) => {
+    const { username, password, confirmPassword } = payload;
     const existingUser = await prisma.user.findFirst({
       where: { name: username },
     });
     if (existingUser) {
-      throw new Error(`User '${username}' already exists`);
+      return `User '${username}' already exists`;
     }
+    return null;
+  };
+
+  signUp = async (username: string, password: string) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
       data: {
