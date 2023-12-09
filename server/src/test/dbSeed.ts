@@ -21,10 +21,11 @@ export const seed = async () => {
   const authors = await prisma.author.findMany();
 
   const booksToCreate = booksData.map((book) => {
-    const authorName = book.authorName;
-    delete (book as any).authorName;
+    const bookCopy = { ...book };
+    const authorName = bookCopy.authorName;
+    delete (bookCopy as any).authorName;
     return {
-      ...book,
+      ...bookCopy,
       authorId: authors.find((x) => x.name === authorName)!.id,
       libraryId: libraries[Math.floor(Math.random() * libraries.length)].id,
     };

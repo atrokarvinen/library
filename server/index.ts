@@ -9,6 +9,7 @@ import { prisma } from "./src/core/prisma";
 import { authMiddleware } from "./src/middleware/authMiddleware";
 import { unknownRouteMiddleware } from "./src/middleware/unknownRouteMiddleware";
 import { printAll, seed } from "./src/test/dbSeed";
+import { testRouter } from "./src/test/testRouter";
 
 const seedIfDbEmpty = () =>
   prisma.book.findMany().then((books) => {
@@ -27,6 +28,7 @@ app.use(authMiddleware);
 app.use("/auth", authRouter);
 app.use("/borrowings", borrowingRouter);
 app.use("/books", catalogRouter);
+app.use("/test", testRouter);
 
 app.use(unknownRouteMiddleware);
 

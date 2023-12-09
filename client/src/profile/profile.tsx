@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { axios } from "../core/axios";
 import { Borrowing } from "../home/borrowing";
@@ -40,11 +41,13 @@ const Profile = () => {
     <div>
       <h1>Profile</h1>
       <h2>Currently borrowed:</h2>
-      <BorrowingList
-        borrowings={currentlyBorrowed}
-        onReturnBook={returnBook}
-        onExtendBorrowing={onExtendBorrowing}
-      />
+      <Box data-testid="currently-borrowed">
+        <BorrowingList
+          borrowings={currentlyBorrowed}
+          onReturnBook={returnBook}
+          onExtendBorrowing={onExtendBorrowing}
+        />
+      </Box>
       <h2>Previously borrowed:</h2>
       <BorrowingList borrowings={previouslyBorrowed} />
     </div>

@@ -23,7 +23,7 @@ export const BookListItem = ({ book }: BookListItemProps) => {
   const chipColor = availableCount === 0 ? "error" : "success";
 
   return (
-    <Card sx={{ p: 1, width: 300 }}>
+    <Card data-testid="book-card" sx={{ p: 1, width: 300 }}>
       <CardActionArea>
         <MuiLink component={Link} to={`/books/${book.id}`} underline="none">
           <CardMedia

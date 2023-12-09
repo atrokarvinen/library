@@ -1,4 +1,4 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { useNavigate } from "react-router";
 import { axios } from "../core/axios";
 import { useAppDispatch } from "../core/store";
@@ -31,8 +31,6 @@ export const SignUp = () => {
   return (
     <Box mt={2}>
       <SignUpForm onSubmit={handleSignUp} />
-      <Button onClick={testToast}>Success</Button>
-      <Button onClick={testToastError}>Error</Button>
     </Box>
   );
 };

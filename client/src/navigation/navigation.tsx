@@ -1,4 +1,11 @@
-import { AppBar, Button, Link as MuiLink, Stack, Toolbar } from "@mui/material";
+import {
+  AppBar,
+  Button,
+  Link as MuiLink,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { axios } from "../core/axios";
 
@@ -50,7 +57,7 @@ const Navigation = () => {
               underline={isActive(page) ? "always" : "none"}
               sx={{ ":hover": { color: "black" } }}
             >
-              {page.label}
+              <Typography fontSize={26}>{page.label}</Typography>
             </MuiLink>
           ))}
         </Stack>

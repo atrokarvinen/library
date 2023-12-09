@@ -8,7 +8,7 @@ type BookListProps = {
 
 export const BookList = ({ books }: BookListProps) => {
   return (
-    <Grid container spacing={2}>
+    <Grid data-testid="book-list" container spacing={2}>
       {books.map((book) => (
         <Grid key={book.id} item>
           <BookListItem book={book} />

@@ -22,7 +22,7 @@ export const BorrowingList = ({
       {borrowings.map((borrowing) => {
         return (
           <Grid key={borrowing.id} item>
-            <Card>
+            <Card data-testid="borrowed-item">
               <dl>
                 <dt>Title</dt>
                 <dd>{borrowing.book?.title}</dd>
