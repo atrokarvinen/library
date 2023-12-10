@@ -18,16 +18,16 @@ test("loads books", async ({ page }) => {
 test("shows correct data in book card", async ({ page }) => {
   const card = await page
     .getByTestId("book-card")
-    .filter({ hasText: "Pride and Prejudice" });
+    .filter({ hasText: "The Great Gatsby" });
 
   await expect(card).toBeVisible();
-  await expect(card).toContainText("Jane Austen");
-  await expect(card).toContainText("1813");
-  await expect(card).toContainText("Available (2)");
+  await expect(card).toContainText("F. Scott Fitzgerald");
+  await expect(card).toContainText("1925");
+  await expect(card).toContainText("Available (4)");
 });
 
 test("shows book availability", async ({ page }) => {
-  const bookName = "The Catcher in the Rye";
+  const bookName = "To Kill a Mockingbird";
   const card = await page
     .getByTestId("book-card")
     .filter({ hasText: bookName });

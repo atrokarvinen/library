@@ -14,7 +14,8 @@ const Profile = () => {
   };
 
   const getPreviouslyBorrowed = async () => {
-    setPreviouslyBorrowed([]);
+    const response = await axios.get<Borrowing[]>("/borrowings/history");
+    setPreviouslyBorrowed(response.data);
   };
 
   useEffect(() => {
@@ -49,7 +50,9 @@ const Profile = () => {
         />
       </Box>
       <h2>Previously borrowed:</h2>
-      <BorrowingList borrowings={previouslyBorrowed} />
+      <Box data-testid="previously-borrowed">
+        <BorrowingList borrowings={previouslyBorrowed} />
+      </Box>
     </div>
   );
 };

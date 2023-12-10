@@ -14,21 +14,13 @@ type Props = {
 };
 
 export const BookDetailsItemsTable = ({ book }: Props) => {
-  const available = book.count - book.borrowings.length;
-  const items = book.borrowings.map((borrowing) => {
+  const items = book.bookItems.map((item) => {
     return {
-      libraryName: book.library?.name ?? "N/A",
-      status: "Unavailable",
-      expirationDate: formatDate(borrowing.end),
+      libraryName: item.library.name,
+      status: item.borrowing ? "Unavailable" : "Available",
+      expirationDate: formatDate(item.borrowing?.end),
     };
   });
-  for (let i = 0; i < available; i++) {
-    items.push({
-      libraryName: book.library?.name ?? "N/A",
-      status: "Available",
-      expirationDate: "-",
-    });
-  }
 
   const tHeadBgColor = "var(--mui-palette-primary-main)";
   const tHeadColor = "var(--mui-palette-primary-contrastText)";

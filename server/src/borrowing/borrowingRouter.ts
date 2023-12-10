@@ -6,6 +6,7 @@ export const borrowingRouter = Router();
 const controller = new BorrowingController();
 
 borrowingRouter.get("/", controller.getBorrowings);
+borrowingRouter.get("/history", controller.getHistory);
 borrowingRouter.get("/:id", controller.getBorrowing);
 borrowingRouter.post("/", controller.createBorrowing);
 borrowingRouter.put("/:id", controller.updateBorrowing);

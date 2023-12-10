@@ -1,3 +1,4 @@
+import { Borrowing } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { BorrowingService } from "./borrowingService";
 
@@ -10,6 +11,17 @@ export class BorrowingController {
       if (!userId) return res.status(401).json({ message: "Unauthorized" });
       const borrowings = await this.service.getBorrowings(userId);
       res.json(borrowings);
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  getHistory = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId = req.userId;
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const borrowingHistory = await this.service.getHistory(userId);
+      res.json(borrowingHistory);
     } catch (error) {
       next(error);
     }
@@ -32,13 +44,17 @@ export class BorrowingController {
       const userId = req.userId;
       if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
-      const availableCount = await this.service.getAvailableCount(
-        req.body.bookId
-      );
-      if (availableCount <= 0)
+      const bookId = Number(req.body.bookId);
+      const firstItem = await this.service.getFirstAvailable(bookId);
+      if (!firstItem)
         return res.status(400).json({ message: "Book not available" });
 
-      const borrowing = { ...req.body, userId };
+      const borrowing: Omit<Borrowing, "id"> = {
+        bookItemId: firstItem.id,
+        start: req.body.start,
+        end: req.body.end,
+        userId,
+      };
       const createdBorrowing = await this.service.addBorrowing(borrowing);
 
       console.log("created borrowing:", createdBorrowing);
@@ -79,7 +95,9 @@ export class BorrowingController {
       const id = Number(req.params.id);
       console.log("deleting borrowing:", id);
       const borrowing = await this.service.deleteBorrowing(id);
-      console.log(`deleted borrowing (${id}) of book ${borrowing.book.title}`);
+      console.log(
+        `deleted borrowing (${id}) of bookItem (${borrowing.bookItemId})`
+      );
       res.json(borrowing);
     } catch (error) {
       next(error);

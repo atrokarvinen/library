@@ -17,7 +17,9 @@ type BookListItemProps = {
 };
 
 export const BookListItem = ({ book }: BookListItemProps) => {
-  const availableCount = book.count - book.borrowings.length;
+  const availableCount = book.bookItems.filter(
+    (item) => !item.borrowing
+  ).length;
   const chipLabel =
     availableCount === 0 ? "Unavailable" : `Available (${availableCount})`;
   const chipColor = availableCount === 0 ? "error" : "success";

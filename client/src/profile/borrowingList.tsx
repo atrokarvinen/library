@@ -25,36 +25,36 @@ export const BorrowingList = ({
             <Card data-testid="borrowed-item">
               <dl>
                 <dt>Title</dt>
-                <dd>{borrowing.book?.title}</dd>
+                <dd>{borrowing.bookItem?.book.title}</dd>
                 <dt>Author</dt>
-                <dd>{borrowing.book?.author?.name}</dd>
+                <dd>{borrowing.bookItem?.book.author?.name}</dd>
                 <dt>Start</dt>
                 <dd>{formatDate(borrowing.start)}</dd>
                 <dt>End</dt>
                 <dd>{formatDate(borrowing.end)}</dd>
               </dl>
-              <Stack
-                direction="row"
-                spacing={2}
-                mt={4}
-                justifyContent="flex-end"
-              >
-                <Button
-                  variant="contained"
-                  onClick={() => onReturnBook && onReturnBook(borrowing.id)}
+              {onReturnBook && onExtendBorrowing && (
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  mt={4}
+                  justifyContent="flex-end"
                 >
-                  Return
-                </Button>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={() =>
-                    onExtendBorrowing && onExtendBorrowing(borrowing.id)
-                  }
-                >
-                  Extend
-                </Button>
-              </Stack>
+                  <Button
+                    variant="contained"
+                    onClick={() => onReturnBook(borrowing.id)}
+                  >
+                    Return
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => onExtendBorrowing(borrowing.id)}
+                  >
+                    Extend
+                  </Button>
+                </Stack>
+              )}
             </Card>
           </Grid>
         );

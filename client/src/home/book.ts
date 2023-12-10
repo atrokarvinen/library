@@ -13,11 +13,19 @@ export type Book = {
   authorName?: string;
   author?: Author;
 
-  libraryId: number;
-  library?: Library;
+  bookItems: BookItem[];
+};
 
-  count: number;
-  borrowings: Borrowing[];
+export type BookItem = {
+  id: number;
+
+  bookId: number;
+  book: Book;
+
+  libraryId: number;
+  library: Library;
+
+  borrowing?: Borrowing;
 };
 
 export const defaultBook: Book = {
@@ -28,7 +36,5 @@ export const defaultBook: Book = {
   published: new Date(),
   pages: 0,
 
-  libraryId: 0,
-  borrowings: [],
-  count: 0,
+  bookItems: [],
 };

@@ -9,13 +9,14 @@ import {
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { axios } from "../core/axios";
+import { useApiRequest } from "../core/useApiRequest";
 import { Book } from "./book";
 import { BookDetailsItemsTable } from "./bookDetailsItemsTable";
 import { BookDetailsTable } from "./bookDetailsTable";
 import { BookInformationText } from "./bookInformationText";
-import { Borrowing } from "./borrowing";
 
 export const BookDetails = () => {
+  const { request } = useApiRequest();
   const routeParams = useParams();
   const id = Number(routeParams.id);
   const [book, setBook] = useState<Book | null>(null);
@@ -29,21 +30,6 @@ export const BookDetails = () => {
     setBook(response.data);
   };
 
-  const borrowBook = async () => {
-    const start = new Date();
-    const end = new Date();
-    end.setDate(start.getDate() + 14);
-    const borrowing: Omit<Borrowing, "id" | "userId"> = {
-      bookId: id,
-      end,
-      start,
-    };
-    const response = await axios.post(`/borrowings`, borrowing);
-    console.log("created borrowing:", response.data);
-
-    await getBook();
-  };
-
   if (!book) {
     return (
       <Box sx={{ margin: "auto" }}>
@@ -52,7 +38,20 @@ export const BookDetails = () => {
     );
   }
 
-  const available = book.count - book.borrowings.length;
+  const borrowBook = async () => {
+    const start = new Date();
+    const end = new Date();
+    end.setDate(start.getDate() + 14);
+    const borrowing = { bookId: id, end, start };
+    const response = await request(axios.post(`/borrowings`, borrowing));
+    if (!response) return;
+
+    console.log("created borrowing:", response.data);
+
+    await getBook();
+  };
+
+  const available = book.bookItems.filter((item) => !item.borrowing).length;
 
   return (
     <Stack direction="column" spacing={2}>

@@ -7,14 +7,14 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("shows book details", async ({ page }) => {
-  const bookName = "The Catcher in the Rye";
+  const bookName = "To Kill a Mockingbird";
   await page.getByRole("link").filter({ hasText: bookName }).click();
   await expect(page.getByRole("heading", { name: bookName })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Details" })).toBeVisible();
   await expect(page.getByRole("cell", { name: bookName })).toBeVisible();
-  await expect(page.getByRole("cell", { name: "J.D. Salinger" })).toBeVisible();
-  await expect(page.getByRole("cell", { name: "16.7.1951" })).toBeVisible();
-  await expect(page.getByRole("cell", { name: "224" })).toBeVisible();
+  await expect(page.getByRole("cell", { name: "Harper Lee" })).toBeVisible();
+  await expect(page.getByRole("cell", { name: "11.7.1960" })).toBeVisible();
+  await expect(page.getByRole("cell", { name: "281" })).toBeVisible();
   await expect(page.getByText("Unavailable")).toHaveCount(1);
   await expect(page.getByText("Available", { exact: true })).toHaveCount(1);
 });

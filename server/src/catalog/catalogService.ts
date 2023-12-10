@@ -3,14 +3,20 @@ import { prisma } from "../core/prisma";
 export class CatalogService {
   getBooks = async () => {
     return prisma.book.findMany({
-      include: { author: true, borrowings: { select: { id: true } } },
+      include: {
+        author: true,
+        bookItems: { include: { borrowing: { select: { id: true } } } },
+      },
     });
   };
 
   getBookById = async (id: number) => {
     return prisma.book.findUnique({
       where: { id },
-      include: { borrowings: true, author: true, library: true },
+      include: {
+        bookItems: { include: { borrowing: true, library: true } },
+        author: true,
+      },
     });
   };
 

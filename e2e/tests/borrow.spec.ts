@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { BACKEND_URL, FRONTEND_URL } from "./config";
 
-const bookName = "The Catcher in the Rye";
+const bookName = "To Kill a Mockingbird";
 test.beforeEach(async ({ page }) => {
   await page.request.get(BACKEND_URL + "/test/reset-and-seed");
   await page.goto(FRONTEND_URL + "/login");
@@ -27,11 +27,21 @@ test("returns a book", async ({ page }) => {
   await page.getByRole("button", { name: "Borrow" }).click();
   await page.getByRole("link", { name: "Profile" }).click();
 
-  await expect(page.getByTestId("borrowed-item")).toBeVisible();
+  await expect(
+    page.getByTestId("currently-borrowed").getByTestId("borrowed-item")
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("previously-borrowed").getByTestId("borrowed-item")
+  ).toBeHidden();
 
   await page.getByRole("button", { name: "Return" }).click();
 
-  await expect(page.getByTestId("borrowed-item")).toBeHidden();
+  await expect(
+    page.getByTestId("currently-borrowed").getByTestId("borrowed-item")
+  ).toBeHidden();
+  await expect(
+    page.getByTestId("previously-borrowed").getByTestId("borrowed-item")
+  ).toBeVisible();
 
   await page.getByRole("link", { name: "Home" }).click();
   await page.getByRole("link").filter({ hasText: bookName }).click();
