@@ -2,7 +2,6 @@ version: "3.8"
 services:
   db:
     image: postgres
-    restart: always
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
@@ -11,6 +10,7 @@ services:
       - 5432:5432
     volumes:
       - db:/var/lib/postgresql/data
+    restart: always
 
   borrowings:
     build:
@@ -23,17 +23,8 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
     ports:
       - 32768:8080
+    restart: always
 
-  # pgadmin:
-  #   image: dpage/pgadmin4
-  #   restart: always
-  #   depends_on:
-  #     - db
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@example.com
-  #     PGADMIN_DEFAULT_PASSWORD: admin
-  #   ports:
-  #     - 5050:80
 volumes:
   db:
     driver: local
