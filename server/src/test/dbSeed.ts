@@ -48,7 +48,6 @@ export const seed = async () => {
     .flat();
 
   await prisma.bookItem.createMany({ data: bookItemsToCreate });
-  const bookItems = await prisma.bookItem.findMany();
 
   await prisma.user.createMany({
     data: [
@@ -56,29 +55,9 @@ export const seed = async () => {
       { name: "User 2", password: "test" },
     ],
   });
-  const users = await prisma.user.findMany();
-
-  await prisma.borrowing.createMany({
-    data: [
-      {
-        bookItemId: bookItems[0].id,
-        userId: users[0].id,
-        end: new Date(),
-        start: new Date(),
-      },
-      {
-        bookItemId: bookItems[1].id,
-        userId: users[1].id,
-        end: new Date(),
-        start: new Date(),
-      },
-    ],
-  });
 };
 
 export const clearData = async () => {
-  await prisma.borrowingHistory.deleteMany();
-  await prisma.borrowing.deleteMany();
   await prisma.bookItem.deleteMany();
   await prisma.book.deleteMany();
   await prisma.author.deleteMany();
@@ -97,8 +76,4 @@ export const printAll = async () => {
   console.log("libraries:", libraries);
   const users = await prisma.user.findMany();
   console.log("users:", users);
-  const borrowings = await prisma.borrowing.findMany();
-  console.log("borrowings:", borrowings);
-  const borrowingHistory = await prisma.borrowingHistory.findMany();
-  console.log("borrowingHistory:", borrowingHistory);
 };

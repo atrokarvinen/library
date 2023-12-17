@@ -5,7 +5,7 @@ export class CatalogService {
     return prisma.book.findMany({
       include: {
         author: true,
-        bookItems: { include: { borrowing: { select: { id: true } } } },
+        bookItems: true,
       },
     });
   };
@@ -14,7 +14,7 @@ export class CatalogService {
     return prisma.book.findUnique({
       where: { id },
       include: {
-        bookItems: { include: { borrowing: true, library: true } },
+        bookItems: { include: { library: true } },
         author: true,
       },
     });
