@@ -1,8 +1,9 @@
 import { expect, test } from "@playwright/test";
-import { BACKEND_URL, FRONTEND_URL } from "./config";
+import { FRONTEND_URL } from "./config";
+import { setup } from "./setup";
 
 test.beforeEach(async ({ page }) => {
-  await page.request.get(BACKEND_URL + "/test/reset-and-seed");
+  await setup(page);
   await page.goto(FRONTEND_URL);
 });
 

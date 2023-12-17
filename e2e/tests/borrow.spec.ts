@@ -1,9 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { BACKEND_URL, FRONTEND_URL } from "./config";
+import { FRONTEND_URL } from "./config";
+import { setup } from "./setup";
 
 const bookName = "To Kill a Mockingbird";
 test.beforeEach(async ({ page }) => {
-  await page.request.get(BACKEND_URL + "/test/reset-and-seed");
+  await setup(page);
   await page.goto(FRONTEND_URL + "/login");
   await page.getByRole("button", { name: "Generate user" }).click();
   await page.getByRole("link").filter({ hasText: bookName }).click();

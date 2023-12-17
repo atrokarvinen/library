@@ -9,15 +9,10 @@ namespace Borrowings.Controllers;
 [Route("[controller]")]
 public class BorrowingController : ControllerBase
 {
-    private readonly ILogger<BorrowingController> _logger;
     private readonly BorrowingService _borrowingService;
 
-    public BorrowingController(
-        ILogger<BorrowingController> logger,
-        BorrowingService borrowingService
-        )
+    public BorrowingController(BorrowingService borrowingService)
     {
-        _logger = logger;
         _borrowingService = borrowingService;
     }
 

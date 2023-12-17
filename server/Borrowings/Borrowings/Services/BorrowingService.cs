@@ -76,4 +76,11 @@ public class BorrowingService
         await _context.SaveChangesAsync();
         return created.Entity; 
     }
+
+    public async Task Reset()
+    {
+        _context.Borrowings.RemoveRange(_context.Borrowings.ToList());
+        _context.BorrowingHistory.RemoveRange(_context.BorrowingHistory.ToList());
+        await _context.SaveChangesAsync();
+    }
 }
