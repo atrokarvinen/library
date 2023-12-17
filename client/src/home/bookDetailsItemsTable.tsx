@@ -8,17 +8,20 @@ import {
 } from "@mui/material";
 import { formatDate } from "../core/formatDate";
 import { Book } from "./book";
+import { Borrowing } from "./borrowing";
 
 type Props = {
   book: Book;
+  borrowings: Borrowing[];
 };
 
-export const BookDetailsItemsTable = ({ book }: Props) => {
+export const BookDetailsItemsTable = ({ book, borrowings }: Props) => {
   const items = book.bookItems.map((item) => {
+    const borrowing = borrowings.find((x) => item.id === x.bookItemId);
     return {
       libraryName: item.library.name,
-      status: item.borrowing ? "Unavailable" : "Available",
-      expirationDate: formatDate(item.borrowing?.end),
+      status: !!borrowing ? "Unavailable" : "Available",
+      expirationDate: formatDate(borrowing?.end),
     };
   });
 

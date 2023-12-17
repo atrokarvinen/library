@@ -15,6 +15,5 @@ test("shows book details", async ({ page }) => {
   await expect(page.getByRole("cell", { name: "Harper Lee" })).toBeVisible();
   await expect(page.getByRole("cell", { name: "11.7.1960" })).toBeVisible();
   await expect(page.getByRole("cell", { name: "281" })).toBeVisible();
-  await expect(page.getByText("Unavailable")).toHaveCount(1);
-  await expect(page.getByText("Available", { exact: true })).toHaveCount(1);
+  await expect(page.getByText("Available", { exact: true })).toHaveCount(2);
 });

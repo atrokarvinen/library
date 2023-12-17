@@ -20,6 +20,10 @@ export class CatalogService {
     });
   };
 
+  getBookItemsByBook = async (id: number) => {
+    return prisma.bookItem.findMany({ where: { bookId: id } });
+  };
+
   addBook = async (book: any) => {
     return prisma.book.create({ data: book });
   };

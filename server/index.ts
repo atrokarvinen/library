@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use(authMiddleware);
 
 app.use("/auth", authRouter);
-app.use("/borrowings", borrowingRouter);
+app.use("/borrowing", borrowingRouter);
 app.use("/books", catalogRouter);
 app.use("/test", testRouter);
 

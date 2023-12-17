@@ -24,6 +24,21 @@ export class CatalogController {
     }
   };
 
+  getBookItemsByBook = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const bookItems = await this.catalogService.getBookItemsByBook(
+        +req.params.id
+      );
+      return res.json(bookItems);
+    } catch (error) {
+      next(error);
+    }
+  };
+
   addBook = async (req: Request, res: Response, next: NextFunction) => {
     try {
       console.log("addBook:", req.body);

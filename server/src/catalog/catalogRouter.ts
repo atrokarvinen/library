@@ -6,6 +6,7 @@ const controller = new CatalogController();
 
 catalogRouter.get("/", controller.getBooks);
 catalogRouter.get("/:id", controller.getBookById);
+catalogRouter.get("/:id/items", controller.getBookItemsByBook);
 
 catalogRouter.post("/", controller.addBook);
 catalogRouter.put("/:id", controller.updateBook);

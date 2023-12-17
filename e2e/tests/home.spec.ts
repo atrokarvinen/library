@@ -27,7 +27,7 @@ test("shows correct data in book card", async ({ page }) => {
 });
 
 test("shows book availability", async ({ page }) => {
-  const bookName = "To Kill a Mockingbird";
+  const bookName = "Pride and Prejudice";
   const card = await page
     .getByTestId("book-card")
     .filter({ hasText: bookName });

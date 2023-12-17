@@ -11,15 +11,16 @@ import {
 import { Link } from "react-router-dom";
 import { Book } from "./book";
 import { BookInformationText } from "./bookInformationText";
+import { Borrowing } from "./borrowing";
+import { getAvailableCount } from "./borrowingCount";
 
 type BookListItemProps = {
+  borrowings: Borrowing[];
   book: Book;
 };
 
-export const BookListItem = ({ book }: BookListItemProps) => {
-  const availableCount = book.bookItems.filter(
-    (item) => !item.borrowing
-  ).length;
+export const BookListItem = ({ book, borrowings }: BookListItemProps) => {
+  const availableCount = getAvailableCount(book.bookItems, borrowings);
   const chipLabel =
     availableCount === 0 ? "Unavailable" : `Available (${availableCount})`;
   const chipColor = availableCount === 0 ? "error" : "success";

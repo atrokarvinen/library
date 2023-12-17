@@ -1,18 +1,16 @@
-import { User } from "../login/user";
-import { BookItem } from "./book";
-import { Library } from "./library";
-
 export type Borrowing = {
   id: number;
   end: Date;
   start: Date;
 
-  library?: Library;
-  libraryId: number;
-
   bookId: number;
-  bookItem?: BookItem;
-
+  bookItemId: number;
   userId: number;
-  user?: User;
+};
+
+export type CreateBorrowingDto = {
+  bookId: number;
+  bookItemId: number;
+  start: Date;
+  end: Date;
 };

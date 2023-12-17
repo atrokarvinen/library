@@ -1,0 +1,6 @@
+@Borrowings_HostAddress = http://localhost:32768
+
+GET {{Borrowings_HostAddress}}/borrowing/
+Accept: application/json
+
+###

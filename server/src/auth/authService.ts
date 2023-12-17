@@ -3,16 +3,19 @@ import { prisma } from "../core/prisma";
 import randomNames from "./randomNames.json";
 
 export class AuthService {
-  signIn = async (username: string, password: string) => {
+  validateSignIn = async (username: string, password: string) => {
     const user = await prisma.user.findFirst({ where: { name: username } });
     if (!user) {
-      throw new Error(`User '${username}' not found`);
+      return `User '${username}' not found`;
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new Error("Invalid password");
+      return "Invalid password";
     }
-    return user;
+  };
+
+  signIn = async (username: string) => {
+    return prisma.user.findFirst({ where: { name: username } });
   };
 
   validateSignUp = async (payload: any) => {

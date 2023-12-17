@@ -7,8 +7,17 @@ export class AuthController {
   signIn = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { username, password } = req.body;
-      const user = await this.authService.signIn(username, password);
-      res.cookie("userId", user.id).json(user);
+      const validationError = await this.authService.validateSignIn(
+        username,
+        password
+      );
+      if (validationError) {
+        return res.status(400).json({ message: validationError });
+      }
+      const user = await this.authService.signIn(username);
+      res
+        .cookie("userId", user!.id, { secure: true, sameSite: "none" })
+        .json(user);
     } catch (error) {
       next(error);
     }

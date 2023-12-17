@@ -10,14 +10,15 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("borrows a book", async ({ page }) => {
-  await expect(page.getByText("Available", { exact: true })).toHaveCount(1);
+  await expect(page.getByText("Available", { exact: true })).toHaveCount(2);
   await page.getByRole("link", { name: "Profile" }).click();
   await expect(page.getByTestId("borrowed-item")).toBeHidden();
   await page.goBack();
 
   await page.getByRole("button", { name: "Borrow" }).click();
 
-  await expect(page.getByText("Available", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("Available", { exact: true })).toHaveCount(1);
+  await expect(page.getByText("Unavailable")).toHaveCount(1);
 
   await page.getByRole("link", { name: "Profile" }).click();
   await expect(page.getByTestId("borrowed-item")).toHaveCount(1);
@@ -34,7 +35,7 @@ test("returns a book", async ({ page }) => {
     page.getByTestId("previously-borrowed").getByTestId("borrowed-item")
   ).toBeHidden();
 
-  await page.getByRole("button", { name: "Return" }).click();
+  await page.getByRole("button", { name: "Return", exact: true }).click();
 
   await expect(
     page.getByTestId("currently-borrowed").getByTestId("borrowed-item")
@@ -46,5 +47,5 @@ test("returns a book", async ({ page }) => {
   await page.getByRole("link", { name: "Home" }).click();
   await page.getByRole("link").filter({ hasText: bookName }).click();
 
-  await expect(page.getByText("Available", { exact: true })).toHaveCount(1);
+  await expect(page.getByText("Available", { exact: true })).toHaveCount(2);
 });

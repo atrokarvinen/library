@@ -8,22 +8,26 @@ import {
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { axios } from "../core/axios";
+import { useApiRequest } from "../core/useApiRequest";
 import { LoginForm } from "./loginForm";
 import { LoginFormType } from "./loginFormType";
 
 const Login = () => {
+  const { request } = useApiRequest();
   const navigate = useNavigate();
 
   const handleLogin = async (form: LoginFormType) => {
     console.log(`signing in user '${form.username}'...`);
-    const response = await axios.post("/auth/signin", form);
+    const response = await request(axios.post("/auth/signin", form));
+    if (!response) return;
     console.log(`signed in user '${response.data.name}'`);
     navigate("/");
   };
 
   const generateUser = async () => {
     console.log("generating user...");
-    const response = await axios.post("/auth/generate");
+    const response = await request(axios.post("/auth/generate"));
+    if (!response) return;
     console.log(`generated user '${response.data.name}'`);
     await handleLogin({
       username: response.data.name,
