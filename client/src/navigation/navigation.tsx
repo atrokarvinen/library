@@ -19,6 +19,7 @@ const pages: Page[] = [
   { label: "Admin", path: "/admin" },
   { label: "Profile", path: "/profile" },
   { label: "Login", path: "/login" },
+  { label: "Test", path: "/test" },
 ];
 
 const Navigation = () => {

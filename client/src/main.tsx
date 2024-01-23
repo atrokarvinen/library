@@ -12,6 +12,7 @@ import { Layout } from "./layout.tsx";
 import Login from "./login/login.tsx";
 import { SignUp } from "./login/signUp.tsx";
 import Profile from "./profile/profile.tsx";
+import { TestPage } from "./testPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,7 @@ const router = createBrowserRouter([
       { path: "profile", element: <Profile /> },
       { path: "login", element: <Login /> },
       { path: "login/signup", element: <SignUp /> },
+      { path: "test", element: <TestPage /> },
     ],
   },
 ]);
